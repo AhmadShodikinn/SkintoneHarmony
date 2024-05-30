@@ -2,4 +2,7 @@
     <string name="app_name">SkintoneHarmony</string>
     <string name="title">SKINTONE HARMONY</string>
     <string name="button1">Upload Image</string>
+    <string name="subtitle1">Still confused\n about your skintone?</string>
+    <string name="subtitle2">Afraid your makeup\n color wont match?</string>
+    <string name="subtitle3">Afraid your skin\n will be damaged?</string>
 </resources>
