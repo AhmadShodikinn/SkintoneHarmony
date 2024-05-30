@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SkintoneHarmony</string>
+    <string name="title">SKINTONE HARMONY</string>
+    <string name="button1">Upload Image</string>
 </resources>
