@@ -5,4 +5,12 @@
     <string name="subtitle1">Still confused\n about your skintone?</string>
     <string name="subtitle2">Afraid your makeup\n color wont match?</string>
     <string name="subtitle3">Afraid your skin\n will be damaged?</string>
+    <string name="action_setting">Settings</string>
+    <string name="action_quit">Close App</string>
+    <string name="previewImage">Preview Image</string>
+    <string name="chooseImage">Choose Image</string>
+    <string name="button2">Open Gallery</string>
+    <string name="button3">Open Camera</string>
+    <string name="button4">Start Analysis</string>
+    <string name="imageDescription">Preview For Image Analysis</string>
 </resources>
