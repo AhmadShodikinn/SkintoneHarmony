@@ -2,4 +2,6 @@
 <resources>
     <color name="ColorPrimary">#FFFFF6</color>
     <color name="ColorSecondary">#573E39</color>
+    <color name="ColorSplash">#D3AC7D</color>
+    <color name="White">#FFFFFF</color>
 </resources>
