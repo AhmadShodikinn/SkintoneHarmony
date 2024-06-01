@@ -13,4 +13,5 @@
     <string name="button3">Open Camera</string>
     <string name="button4">Start Analysis</string>
     <string name="imageDescription">Preview For Image Analysis</string>
+    <string name="action_take_image">Take Image From Camera</string>
 </resources>
