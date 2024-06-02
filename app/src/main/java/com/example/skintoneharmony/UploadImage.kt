@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -15,9 +14,14 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.skintoneharmony.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.skintoneharmony.databinding.ActivityUploadImageBinding
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView
+
 
 class UploadImage : AppCompatActivity() {
     private lateinit var binding : ActivityUploadImageBinding
@@ -63,13 +67,24 @@ class UploadImage : AppCompatActivity() {
         binding.btnOpenCamera.setOnClickListener { startCamera() }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("currentImageUri", currentImageUri)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        currentImageUri = savedInstanceState.getParcelable("currentImageUri")
+        showImage()
+    }
+
     private fun startGallery() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     private fun startCamera() {
         val intent = Intent(this, CameraActivity::class.java)
-        startActivity(intent)
+        launcherIntentCameraX.launch(intent)
     }
 
     private val launcherGallery = registerForActivityResult(
@@ -83,10 +98,32 @@ class UploadImage : AppCompatActivity() {
         }
     }
 
+    private val launcherIntentCameraX = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == CAMERAX_RESULT) {
+            currentImageUri = it.data?.getStringExtra(CameraActivity.EXTRA_CAMERAX_IMAGE)?.toUri()
+            showImage()
+        }
+    }
+
     private fun showImage() {
         currentImageUri?.let {
             Log.d("Image URI", "showImage: $it")
-            binding.imageView2.setImageURI(it)
+//            binding.imageView2.setImageURI(it)
+            CropImage.activity(it)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            val croppedImageUri = result.uri
+            // Use the cropped image URI here
+            binding.imageView2.setImageURI(croppedImageUri)
         }
     }
 
