@@ -13,4 +13,6 @@
     <string name="button3">Open Camera</string>
     <string name="button4">Start Analysis</string>
     <string name="imageDescription">Preview For Image Analysis</string>
+    <string name="result1_text">YOUR COLOR TONE IS HERE!</string>
+    <string name="show_result_text">Show Result</string>
 </resources>
