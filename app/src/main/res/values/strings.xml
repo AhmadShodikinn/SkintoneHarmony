@@ -16,4 +16,5 @@
     <string name="action_take_image">Take Image From Camera</string>
     <string name="result1_text">YOUR COLOR TONE IS HERE!</string>
     <string name="show_result_text">Show Result</string>
+    <string name="setting_text">Setting</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.skintoneharmony
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -65,6 +66,7 @@ class UploadImage : AppCompatActivity() {
 
         binding.btnOpenGallery.setOnClickListener { startGallery() }
         binding.btnOpenCamera.setOnClickListener { startCamera() }
+        binding.btnAnalysis.setOnClickListener { analyzeImage() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -127,6 +129,17 @@ class UploadImage : AppCompatActivity() {
         }
     }
 
+    private fun analyzeImage() {
+        //ML Function         TODO("Not yet implemented")
+        moveToResult()
+    }
+
+    private fun moveToResult() {
+        val intent = Intent(this, FirstResult::class.java).apply {
+        }
+        startActivity(intent)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_item, menu)  // Inflate the menu
         return true
@@ -134,7 +147,8 @@ class UploadImage : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_setting -> {
-            // User chooses the "Settings" item. Show the app settings UI.
+            val intent=Intent(this, SettingActivity::class.java)
+            startActivity(intent)
             true
         }
 
