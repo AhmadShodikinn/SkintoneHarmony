@@ -9,7 +9,6 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 object ImageHelper {
-
     fun loadImageFromUri(context: Context, uri: Uri, imageWidth: Int, imageHeight: Int): Bitmap? {
         var inputStream: InputStream? = null
         try {
@@ -23,7 +22,9 @@ object ImageHelper {
             options.inSampleSize = calculateInSampleSize(options, imageWidth, imageHeight)
             inputStream = context.contentResolver.openInputStream(uri)
             options.inJustDecodeBounds = false
-            return BitmapFactory.decodeStream(inputStream, null, options)
+            val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+
+            return bitmap?.let { Bitmap.createScaledBitmap(it, imageWidth, imageHeight, true) }
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
@@ -54,8 +55,8 @@ object ImageHelper {
         val intValues = IntArray(imageWidth * imageHeight)
         bitmap.getPixels(intValues, 0, imageWidth, 0, 0, imageWidth, imageHeight) // <-- Perubahan disini
         var pixel = 0
-        for (i in 0 until imageWidth) {
-            for (j in 0 until imageHeight) {
+        for (i in 0 until imageHeight) {
+            for (j in 0 until imageWidth) {
                 val value = intValues[pixel++]
                 byteBuffer.putFloat(((value shr 16 and 0xFF) - 127.5f) / 127.5f)
                 byteBuffer.putFloat(((value shr 8 and 0xFF) - 127.5f) / 127.5f)

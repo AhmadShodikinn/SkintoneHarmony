@@ -17,4 +17,6 @@
     <string name="result1_text">YOUR COLOR TONE IS HERE!</string>
     <string name="show_result_text">Show Result</string>
     <string name="setting_text">Setting</string>
+    <string name="typeOfSkin">Type : Fair</string>
+    <string name="button5">Create New Analysis</string>
 </resources>

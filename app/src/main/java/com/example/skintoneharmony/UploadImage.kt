@@ -20,7 +20,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.skintoneharmony.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.skintoneharmony.databinding.ActivityUploadImageBinding
-import com.example.skintoneharmony.ml.SkintoneModelAndiko
+import com.example.skintoneharmony.ml.ToneModel
 import com.example.skintoneharmony.tools.ImageHelper
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -139,9 +139,9 @@ class UploadImage : AppCompatActivity() {
 //        moveToResult()
 
         currentImageUri?.let { uri ->
-            val bitmap = ImageHelper.loadImageFromUri(this, uri, 128, 128)
+            val bitmap = ImageHelper.loadImageFromUri(this, uri, 576, 768)
             if (bitmap != null) {
-                val byteBuffer = ImageHelper.convertBitmapToByteBuffer(bitmap, 128, 128)
+                val byteBuffer = ImageHelper.convertBitmapToByteBuffer(bitmap, 576, 768)
                 runModel(byteBuffer)
             } else {
                 Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
@@ -152,10 +152,10 @@ class UploadImage : AppCompatActivity() {
     }
 
     private fun runModel(byteBuffer: ByteBuffer) {
-        val model = SkintoneModelAndiko.newInstance(this)
+        val model = ToneModel.newInstance(this)
 
         // Creates inputs for reference
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 128, 128, 3), DataType.FLOAT32)
+        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 576, 768, 3), DataType.FLOAT32)
         inputFeature0.loadBuffer(byteBuffer)
 
         // Runs model inference and gets result
@@ -164,29 +164,24 @@ class UploadImage : AppCompatActivity() {
 
         // Gets result from outputFeature0
         val results = outputFeature0.floatArray
-
-        // Check the type of results
-        if (results.javaClass.isArray) {
-            Toast.makeText(this, "Output is an array", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Output is of unknown type", Toast.LENGTH_SHORT).show()
-        }
+        Log.d("ModelOutput", "Original results: ${results.joinToString(", ")}")
 
         val sortedRes = results.sortedDescending()
-        val roundedRes = Math.round(sortedRes.first()) + 1
+        Log.d("ModelOutput", "Sorted results: ${sortedRes.joinToString(", ")}")
 
-        Log.d("Rounded Results", "Skin tone : $roundedRes")
+        val roundedRes = Math.round(sortedRes.first()) + 1
+        Log.d("ModelOutput", "Rounded result: $roundedRes")
 
         // Handle the results
-        // For example, display the result or pass it to another activity
-        // ...
+        moveToResult(roundedRes)
 
         // Releases model resources if no longer used
         model.close()
     }
 
-    private fun moveToResult() {
+    private fun moveToResult(skinTone: Int) {
         val intent = Intent(this, FirstResult::class.java).apply {
+            putExtra("skinTone", skinTone)
         }
         startActivity(intent)
     }
