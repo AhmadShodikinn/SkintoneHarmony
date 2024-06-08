@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.skintoneharmony.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.skintoneharmony.databinding.ActivityUploadImageBinding
 import com.example.skintoneharmony.ml.ToneModel
+import com.example.skintoneharmony.ml.ToneModelAndiko
 import com.example.skintoneharmony.tools.ImageHelper
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -138,12 +139,12 @@ class UploadImage : AppCompatActivity() {
 
     private fun analyzeImage() {
         currentImageUri?.let { uri ->
-            val bitmap = ImageHelper.loadImageFromUri(this, uri)
+            val bitmap = ImageHelper.loadImageFromUri(this, uri, 128, 128)
             if (bitmap != null) {
                 // Proses gambar menggunakan ImageProcessor.Builder()
                 val processor = ImageProcessor.Builder()
-                    .add(NormalizeOp(0f, 255f)) // Convert from uint8 [0, 255] to float32 [0, 1]
-                    .add(ResizeOp(576, 768, ResizeOp.ResizeMethod.BILINEAR)) // Resize to 576x768
+                    .add(NormalizeOp(0.0f, 255.0f)) // Convert from uint8 [0, 255] to float32 [0, 1]
+                    .add(ResizeOp(128, 128, ResizeOp.ResizeMethod.NEAREST_NEIGHBOR)) // Resize to 576x768
                     .build()
                 val processedImage = processor.process(TensorImage.fromBitmap(bitmap))
 
@@ -157,10 +158,10 @@ class UploadImage : AppCompatActivity() {
     }
 
     private fun runModel(processedImage: TensorImage) {
-        val model = ToneModel.newInstance(this)
+        val model = ToneModelAndiko.newInstance(this)
 
         // Creates inputs for reference
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 576, 768, 3), DataType.FLOAT32)
+        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 128, 128, 3), DataType.FLOAT32)
         inputFeature0.loadBuffer(processedImage.buffer)
 
         // Runs model inference and gets result
@@ -171,16 +172,15 @@ class UploadImage : AppCompatActivity() {
         val results = outputFeature0.floatArray
         Log.d("ModelOutput", "Original results: ${results.contentToString()}")
 
-        val maxIndex = results.indices.maxByOrNull { results[it] } ?: -1
+        var maxIndex = results.indices.maxByOrNull { results[it] } ?: 1
+
         Log.d("ModelOutput", "maxIndex results: $maxIndex")
 
-        val finalRes = maxIndex + 1
-        Log.d("ModelOutput", "Final result: $finalRes")
+        maxIndex += 1
+        maxIndex -= 10
+        maxIndex *= -1
 
-        // Handle the results
-        moveToResult(finalRes)
-
-        // Releases model resources if no longer used
+        Log.d("ModelOutput", "maxIndex absolute results: $maxIndex")
         model.close()
     }
 

@@ -9,17 +9,42 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 object ImageHelper {
-    fun loadImageFromUri(context: Context, uri: Uri): Bitmap? {
-        var inputStream: InputStream? = null
-        try {
-            inputStream = context.contentResolver.openInputStream(uri)
-            return BitmapFactory.decodeStream(inputStream)
+//    fun loadImageFromUri(context: Context, uri: Uri): Bitmap? {
+//        var inputStream: InputStream? = null
+//        try {
+//            inputStream = context.contentResolver.openInputStream(uri)
+//            return BitmapFactory.decodeStream(inputStream)
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        } finally {
+//            inputStream?.close()
+//        }
+//        return null
+//    }
+
+    fun loadImageFromUri(context: Context, imageUri: Uri, targetWidth: Int, targetHeight: Int) : Bitmap? {
+        return try {
+            // Menggunakan BitmapFactory untuk memuat gambar dari URI
+            val options = BitmapFactory.Options()
+            options.inJustDecodeBounds = true
+            BitmapFactory.decodeStream(context.contentResolver.openInputStream(imageUri), null, options)
+
+            // Menghitung faktor skala untuk menyesuaikan ukuran gambar ke targetWidth dan targetHeight
+            val scaleFactor = Math.min(options.outWidth / targetWidth, options.outHeight / targetHeight)
+
+            // Mengatur opsi untuk memuat gambar dengan faktor skala yang benar
+            options.inJustDecodeBounds = false
+            options.inSampleSize = scaleFactor
+
+            // Memuat gambar aktual dengan opsi yang disetel
+            BitmapFactory.decodeStream(context.contentResolver.openInputStream(imageUri), null, options)
+
+            // Anda dapat melakukan preprocessing tambahan di sini jika diperlukan, seperti normalisasi
+
         } catch (e: Exception) {
             e.printStackTrace()
-        } finally {
-            inputStream?.close()
+            null
         }
-        return null
     }
 
     private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
