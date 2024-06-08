@@ -36,6 +36,13 @@ android {
     buildFeatures {
         viewBinding = true
         mlModelBinding = true
+        buildConfig = true
+    }
+
+    android {
+        defaultConfig {
+            buildConfigField("String", "BASE_URL", "\"https://skintone-be-oezdqb3ida-et.a.run.app/api/\"")
+        }
     }
 }
 
@@ -56,4 +63,8 @@ dependencies {
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
     implementation(libs.android.image.cropper)
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 }
