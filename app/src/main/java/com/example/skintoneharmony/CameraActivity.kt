@@ -1,8 +1,11 @@
 package com.example.skintoneharmony
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.OrientationEventListener
+import android.view.Surface
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +16,9 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.core.content.pm.ShortcutInfoCompat
 import com.example.skintoneharmony.databinding.ActivityCameraBinding
+import com.example.skintoneharmony.tools.Utils.createCustomTempFile
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
@@ -73,14 +78,18 @@ class CameraActivity : AppCompatActivity() {
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
 
-        // Implement file output options for the captured image
-        // This is where you handle saving the captured photo
+        val photoFile = createCustomTempFile(application)
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
         imageCapture.takePicture(
+            outputOptions,
             ContextCompat.getMainExecutor(this),
-            object : ImageCapture.OnImageCapturedCallback() {
-                override fun onCaptureSuccess(image: ImageProxy) {
-                    Toast.makeText(this@CameraActivity, "Photo captured successfully", Toast.LENGTH_LONG).show()
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val intent = Intent()
+                    intent.putExtra(EXTRA_CAMERAX_IMAGE, output.savedUri.toString())
+                    setResult(CAMERAX_RESULT, intent)
+                    finish()
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -96,6 +105,38 @@ class CameraActivity : AppCompatActivity() {
             CameraSelector.DEFAULT_BACK_CAMERA
         }
         startCamera()
+    }
+
+    private val orientationEventListener by lazy {
+        object : OrientationEventListener(this) {
+            override fun onOrientationChanged(orientation: Int) {
+                if (orientation == ORIENTATION_UNKNOWN) {
+                    return
+                }
+                val rotation = when (orientation) {
+                    in 45 until 135 -> Surface.ROTATION_270
+                    in 135 until 225 -> Surface.ROTATION_180
+                    in 225 until 315 -> Surface.ROTATION_90
+                    else -> Surface.ROTATION_0
+                }
+                imageCapture?.targetRotation = rotation
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        orientationEventListener.enable()
+    }
+    override fun onStop() {
+        super.onStop()
+        orientationEventListener.disable()
+    }
+
+    companion object {
+        private const val TAG = "CameraActivity"
+        const val EXTRA_CAMERAX_IMAGE = "CameraX Image"
+        const val CAMERAX_RESULT = 200
     }
 
 
