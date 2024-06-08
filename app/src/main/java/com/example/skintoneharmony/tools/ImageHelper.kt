@@ -9,22 +9,11 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 object ImageHelper {
-    fun loadImageFromUri(context: Context, uri: Uri, imageWidth: Int, imageHeight: Int): Bitmap? {
+    fun loadImageFromUri(context: Context, uri: Uri): Bitmap? {
         var inputStream: InputStream? = null
         try {
             inputStream = context.contentResolver.openInputStream(uri)
-            val options = BitmapFactory.Options().apply {
-                inJustDecodeBounds = true
-            }
-            BitmapFactory.decodeStream(inputStream, null, options)
-            inputStream?.close()
-
-            options.inSampleSize = calculateInSampleSize(options, imageWidth, imageHeight)
-            inputStream = context.contentResolver.openInputStream(uri)
-            options.inJustDecodeBounds = false
-            val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
-
-            return bitmap?.let { Bitmap.createScaledBitmap(it, imageWidth, imageHeight, true) }
+            return BitmapFactory.decodeStream(inputStream)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
@@ -49,20 +38,24 @@ object ImageHelper {
         return inSampleSize
     }
 
-    fun convertBitmapToByteBuffer(bitmap: Bitmap, imageWidth: Int, imageHeight: Int): ByteBuffer {
-        val byteBuffer = ByteBuffer.allocateDirect(4 * imageWidth * imageHeight * 3)
+    fun convertBitmapToByteBuffer(bitmap: Bitmap): ByteBuffer {
+        val byteBuffer = ByteBuffer.allocateDirect(bitmap.width * bitmap.height * 3 * 4) // 3 channels (RGB) * 4 bytes per float
         byteBuffer.order(ByteOrder.nativeOrder())
-        val intValues = IntArray(imageWidth * imageHeight)
-        bitmap.getPixels(intValues, 0, imageWidth, 0, 0, imageWidth, imageHeight) // <-- Perubahan disini
-        var pixel = 0
-        for (i in 0 until imageHeight) {
-            for (j in 0 until imageWidth) {
-                val value = intValues[pixel++]
-                byteBuffer.putFloat(((value shr 16 and 0xFF) - 127.5f) / 127.5f)
-                byteBuffer.putFloat(((value shr 8 and 0xFF) - 127.5f) / 127.5f)
-                byteBuffer.putFloat(((value and 0xFF) - 127.5f) / 127.5f)
-            }
+
+        val pixels = IntArray(bitmap.width * bitmap.height)
+        bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+
+        for (pixelValue in pixels) {
+            val r = ((pixelValue shr 16) and 0xFF).toFloat() / 255.0f
+            val g = ((pixelValue shr 8) and 0xFF).toFloat() / 255.0f
+            val b = (pixelValue and 0xFF).toFloat() / 255.0f
+
+            byteBuffer.putFloat(r)
+            byteBuffer.putFloat(g)
+            byteBuffer.putFloat(b)
         }
+
+        byteBuffer.flip()
         return byteBuffer
     }
 

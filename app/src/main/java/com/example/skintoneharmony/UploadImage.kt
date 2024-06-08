@@ -1,7 +1,6 @@
 package com.example.skintoneharmony
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -25,8 +24,11 @@ import com.example.skintoneharmony.tools.ImageHelper
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView
 import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.common.ops.NormalizeOp
+import org.tensorflow.lite.support.image.ImageProcessor
+import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
-import java.nio.ByteBuffer
 
 
 class UploadImage : AppCompatActivity() {
@@ -135,14 +137,17 @@ class UploadImage : AppCompatActivity() {
     }
 
     private fun analyzeImage() {
-        //ML Function         TODO("Not yet implemented")
-//        moveToResult()
-
         currentImageUri?.let { uri ->
-            val bitmap = ImageHelper.loadImageFromUri(this, uri, 576, 768)
+            val bitmap = ImageHelper.loadImageFromUri(this, uri)
             if (bitmap != null) {
-                val byteBuffer = ImageHelper.convertBitmapToByteBuffer(bitmap, 576, 768)
-                runModel(byteBuffer)
+                // Proses gambar menggunakan ImageProcessor.Builder()
+                val processor = ImageProcessor.Builder()
+                    .add(NormalizeOp(0f, 255f)) // Convert from uint8 [0, 255] to float32 [0, 1]
+                    .add(ResizeOp(576, 768, ResizeOp.ResizeMethod.BILINEAR)) // Resize to 576x768
+                    .build()
+                val processedImage = processor.process(TensorImage.fromBitmap(bitmap))
+
+                runModel(processedImage)
             } else {
                 Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
             }
@@ -151,12 +156,12 @@ class UploadImage : AppCompatActivity() {
         }
     }
 
-    private fun runModel(byteBuffer: ByteBuffer) {
+    private fun runModel(processedImage: TensorImage) {
         val model = ToneModel.newInstance(this)
 
         // Creates inputs for reference
         val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 576, 768, 3), DataType.FLOAT32)
-        inputFeature0.loadBuffer(byteBuffer)
+        inputFeature0.loadBuffer(processedImage.buffer)
 
         // Runs model inference and gets result
         val outputs = model.process(inputFeature0)
@@ -164,16 +169,16 @@ class UploadImage : AppCompatActivity() {
 
         // Gets result from outputFeature0
         val results = outputFeature0.floatArray
-        Log.d("ModelOutput", "Original results: ${results.joinToString(", ")}")
+        Log.d("ModelOutput", "Original results: ${results.contentToString()}")
 
-        val sortedRes = results.sortedDescending()
-        Log.d("ModelOutput", "Sorted results: ${sortedRes.joinToString(", ")}")
+        val maxIndex = results.indices.maxByOrNull { results[it] } ?: -1
+        Log.d("ModelOutput", "maxIndex results: $maxIndex")
 
-        val roundedRes = Math.round(sortedRes.first()) + 1
-        Log.d("ModelOutput", "Rounded result: $roundedRes")
+        val finalRes = maxIndex + 1
+        Log.d("ModelOutput", "Final result: $finalRes")
 
         // Handle the results
-        moveToResult(roundedRes)
+        moveToResult(finalRes)
 
         // Releases model resources if no longer used
         model.close()
