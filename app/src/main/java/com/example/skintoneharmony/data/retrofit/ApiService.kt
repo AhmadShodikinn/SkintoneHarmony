@@ -1,15 +1,13 @@
 package com.example.skintoneharmony.data.retrofit
 
-import com.example.skintoneharmony.data.response.SkintoneResponse
+import com.example.skintoneharmony.data.response.SkintoneResponseItem
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("/shades?skintone=FAIR")
+    @GET("/api/shades")
     fun getShades(
-        @Query("q") q: String
-    ): Call<SkintoneResponse>
+        @Query("skintone") skintone: String
+    ): Call<List<SkintoneResponseItem>>
 }
-//    https://skintone-be-oezdqb3ida-et.a.run.app/api/shades?skintone=FAIR

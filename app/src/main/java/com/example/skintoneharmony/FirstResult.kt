@@ -1,9 +1,11 @@
 package com.example.skintoneharmony
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,71 +15,76 @@ import com.example.skintoneharmony.data.response.SkintoneResponseItem
 import com.example.skintoneharmony.data.retrofit.ApiConfig
 import com.example.skintoneharmony.databinding.ActivityFinalResultBinding
 import com.example.skintoneharmony.databinding.ActivityFirstResultBinding
+import com.example.skintoneharmony.viewmodel.MainViewModel
+import com.example.skintoneharmony.viewmodel.ViewModelFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class FirstResult : AppCompatActivity() {
     private lateinit var binding: ActivityFirstResultBinding
-    private lateinit var FinalBinding: ActivityFinalResultBinding
+    private lateinit var finalBinding: ActivityFinalResultBinding
+
+    val factory: ViewModelFactory by lazy {
+        ViewModelFactory.getInstance(application)
+    }
+
+    val viewModel: MainViewModel by viewModels {
+        factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFirstResultBinding.inflate(layoutInflater)
-        FinalBinding = ActivityFinalResultBinding.inflate(layoutInflater)
+        finalBinding = ActivityFinalResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         enableEdgeToEdge()
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val result = intent.getIntExtra("skinTone", 0)
         Toast.makeText(this, "Skin Tone: $result", Toast.LENGTH_SHORT).show()
 
-        FinalBinding.recyclerView.layoutManager = LinearLayoutManager(this)
+        finalBinding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Set onClickListeners for each button
+//        // Set onClickListeners for each button
         binding.btn1tes.setOnClickListener {
-            fetchShades("FAIR")
+//            fetchShades("FAIR")
         }
 
-        binding.btn2tes.setOnClickListener {
-            fetchShades("LIGHT")
+        binding.btnBtnBtnResult.setOnClickListener {
+            val intent = Intent(this, FinalResultActivity::class.java)
+            startActivity(intent)
         }
 
-        binding.btn3tes.setOnClickListener {
-            fetchShades("LIGHT MEDIUM")
-        }
-
-        binding.btn4tes.setOnClickListener {
-            fetchShades("MEDIUM TAN")
-        }
-
-        binding.btn5tes.setOnClickListener {
-            fetchShades("DARK")
-        }
+//
+//        binding.btn2tes.setOnClickListener {
+//            fetchShades("LIGHT")
+//        }
+//
+//        binding.btn3tes.setOnClickListener {
+//            fetchShades("LIGHT MEDIUM")
+//        }
+//
+//        binding.btn4tes.setOnClickListener {
+//            fetchShades("MEDIUM TAN")
+//        }
+//
+//        binding.btn5tes.setOnClickListener {
+//            fetchShades("DARK")
+//        }
     }
+//    private fun setShade(listTone:List<SkintoneResponseItem>){
+//        val adapter = ShadeAdapter()
+//        adapter.submitList(listUsers)
+//        binding.rvUsers.adapter = adapter
+//        adapter.setOnItemClickCallback(object : UsersAdapter.OnItemClickCallback {
+//            override fun onItemClicked(data: ItemsItem) {
+//                selectedUser(data)
+//            }
+//        })
+//    }
 
-    private fun fetchShades(skintone: String) {
-        val client = ApiConfig.getApiService().getShades(skintone)
-        client.enqueue(object : Callback<SkintoneResponse> {
-            override fun onResponse(call: Call<SkintoneResponse>, response: Response<SkintoneResponse>) {
-                if (response.isSuccessful) {
-                    val shades = response.body()?.skintoneResponse
-                    if (shades != null) {
-                        FinalBinding.recyclerView.adapter = ShadeAdapter(shades)
-                    }
-                } else {
-                    Toast.makeText(this@FirstResult, "Failed to retrieve data", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<SkintoneResponse>, t: Throwable) {
-                Toast.makeText(this@FirstResult, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
 }
+
+
+

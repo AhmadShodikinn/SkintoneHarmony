@@ -41,7 +41,7 @@ android {
 
     android {
         defaultConfig {
-            buildConfigField("String", "BASE_URL", "\"https://skintone-be-oezdqb3ida-et.a.run.app/api/\"")
+            buildConfigField("String", "BASE_URL", "\"https://skintone-be-oezdqb3ida-et.a.run.app/\"")
         }
     }
 }
