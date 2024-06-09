@@ -2,6 +2,44 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.SkintoneHarmony" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:windowBackground">@color/ColorPrimaryDark</item>
+        <item name="android:textColor">@color/ColorSecondaryDark</item>
+        <item name="android:toolbarStyle">@style/ToolbarStyle</item>
     </style>
+
+    <style name="splashScreen" parent="Base.Theme.SkintoneHarmony">
+        <item name="android:background">@drawable/splash_background_dark</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="@style/Widget.Material3.Toolbar">
+        <!-- Atur warna latar belakang toolbar -->
+        <item name="android:background">@color/ColorPrimaryDark</item>
+        <!-- Atur warna teks toolbar -->
+        <item name="android:titleTextColor">@color/ColorSecondaryDark</item>
+    </style>
+
+    <style name="ButtonStyle" parent="@style/Widget.Material3.Button">
+        <item name="android:backgroundTint">@color/ColorSecondaryDark</item>
+        <item name="android:textColor">@color/ColorPrimaryDark</item>
+    </style>
+
+    <style name="ButtonStyleOutline" parent="@style/Widget.Material3.Button.OutlinedButton">
+        <item name="android:backgroundTint">@color/ColorPrimaryDark</item>
+        <item name="android:textColor">@color/ColorSecondaryDark</item>
+    </style>
+
+    <style name="ItemSettings" parent="Base.Theme.SkintoneHarmony">
+        <item name="android:icon">@drawable/ic_menu_hamburger</item>
+    </style>
+
+    <style name="RectangleBackground" parent="Base.Theme.SkintoneHarmony">
+        <item name="android:background">@drawable/rectangle_background</item>
+        <item name="android:textColor">@color/ColorSecondary</item>
+    </style>
+
+    <style name="RadioButton" parent="@style/Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbTint">@color/ColorPrimaryDark</item>
+        <item name="trackTint">@color/ColorSecondaryDark</item>
+    </style>
+
 </resources>

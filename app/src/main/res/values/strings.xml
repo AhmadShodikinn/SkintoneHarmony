@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SkintoneHarmony</string>
+    <string name="app_name">Skintone Harmony</string>
     <string name="title">SKINTONE HARMONY</string>
     <string name="button1">Upload Image</string>
     <string name="subtitle1">Still confused\n about your skintone?</string>
@@ -16,7 +16,9 @@
     <string name="action_take_image">Take Image From Camera</string>
     <string name="result1_text">YOUR COLOR TONE IS HERE!</string>
     <string name="show_result_text">Show Result</string>
-    <string name="setting_text">Setting</string>
+    <string name="setting_text">Settings</string>
     <string name="typeOfSkin">Type : Fair</string>
     <string name="button5">Create New Analysis</string>
+    <string name="setting_darkMode">Dark Mode</string>
+    <string name="version_app">V.1.0</string>
 </resources>

@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ColorPrimary"
     tools:context=".FinalResultActivity">
 
     <TextView
@@ -15,7 +14,6 @@
         android:fontFamily="@font/montaga"
         android:gravity="center"
         android:text="@string/result1_text"
-        android:textColor="@color/ColorSecondary"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,8 +45,7 @@
         android:layout_marginTop="600dp"
         android:text="@string/show_result_text"
         android:fontFamily="@font/montaga"
-        android:backgroundTint="@color/ColorSecondary"
-        android:textColor="@color/ColorPrimary"
+        style="@style/ButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

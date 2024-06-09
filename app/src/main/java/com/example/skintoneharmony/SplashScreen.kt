@@ -9,8 +9,14 @@ import android.view.WindowInsets
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
+import com.example.skintoneharmony.preferences.SettingsPreferences
+import com.example.skintoneharmony.preferences.SettingsViewModel
+import com.example.skintoneharmony.preferences.ViewModelFactory
+import com.example.skintoneharmony.preferences.dataStore
 
 class SplashScreen : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.R)
@@ -23,6 +29,19 @@ class SplashScreen : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        val pref = SettingsPreferences.getInstance(application.dataStore)
+        val settingsViewModel = ViewModelProvider(this, ViewModelFactory(pref)).get(
+            SettingsViewModel::class.java
+        )
+
+        settingsViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
         }
 
         window.insetsController?.hide(WindowInsets.Type.statusBars())

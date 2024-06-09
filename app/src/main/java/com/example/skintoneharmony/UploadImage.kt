@@ -172,15 +172,18 @@ class UploadImage : AppCompatActivity() {
         val results = outputFeature0.floatArray
         Log.d("ModelOutput", "Original results: ${results.contentToString()}")
 
-        var maxIndex = results.indices.maxByOrNull { results[it] } ?: 1
+        var maxIndex = results.indices.maxByOrNull { results[it] } ?: -1
 
         Log.d("ModelOutput", "maxIndex results: $maxIndex")
+
+        moveToResult(maxIndex)
 
         maxIndex += 1
         maxIndex -= 10
         maxIndex *= -1
 
         Log.d("ModelOutput", "maxIndex absolute results: $maxIndex")
+
         model.close()
     }
 

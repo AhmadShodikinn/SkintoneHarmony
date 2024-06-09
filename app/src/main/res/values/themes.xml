@@ -2,7 +2,44 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.SkintoneHarmony" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-<!--         <item name="colorPrimary">@color/my_light_primary</item>-->
+        <item name="android:windowBackground">@color/ColorPrimary</item>
+        <item name="android:textColor">@color/ColorSecondary</item>
+        <item name="android:toolbarStyle">@style/ToolbarStyle</item>
+    </style>
+
+    <style name="splashScreen" parent="Base.Theme.SkintoneHarmony">
+        <item name="android:background">@drawable/splash_background</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="@style/Widget.Material3.Toolbar">
+        <!-- Atur warna latar belakang toolbar -->
+        <item name="android:background">@color/ColorPrimary</item>
+        <!-- Atur warna teks toolbar -->
+        <item name="android:titleTextColor">@color/ColorSecondary</item>
+    </style>
+
+    <style name="ButtonStyle" parent="@style/Widget.Material3.Button">
+        <item name="android:backgroundTint">@color/ColorSecondary</item>
+        <item name="android:textColor">@color/ColorPrimary</item>
+    </style>
+
+    <style name="ButtonStyleOutline" parent="@style/Widget.Material3.Button.OutlinedButton">
+        <item name="android:backgroundTint">@color/ColorPrimary</item>
+        <item name="android:textColor">@color/ColorSecondary</item>
+    </style>
+
+    <style name="ItemSettings" parent="Base.Theme.SkintoneHarmony">
+        <item name="android:icon">@drawable/ic_menu_hamburger_secondary</item>
+    </style>
+
+    <style name="RectangleBackground" parent="Base.Theme.SkintoneHarmony">
+        <item name="android:background">@drawable/rectangle_background_dark</item>
+        <item name="android:textColor">@color/ColorPrimary</item>
+    </style>
+
+    <style name="RadioButton" parent="@style/Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbTint">@color/ColorSecondary</item>
+        <item name="trackTint">@color/ColorSplash</item>
     </style>
 
     <style name="Theme.SkintoneHarmony" parent="Base.Theme.SkintoneHarmony" />
