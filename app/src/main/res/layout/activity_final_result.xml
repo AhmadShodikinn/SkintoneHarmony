@@ -9,7 +9,6 @@
     android:fillViewport="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
-        android:background="@color/ColorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".FinalResultActivity">
@@ -18,7 +17,6 @@
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/ColorPrimary"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,9 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montaga"
-
                 android:text="@string/title"
-                android:textColor="@color/ColorSecondary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="16dp"
@@ -39,16 +35,16 @@
         </androidx.appcompat.widget.Toolbar>
 
         <TextView
+            style="@style/RectangleBackground"
+            android:background="@drawable/rectangle_background_dark"
             android:id="@+id/textView4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/rectangle_background"
+            android:layout_marginTop="0dp"
             android:fontFamily="@font/montaga"
-            android:padding="8dp"
+            android:padding="10dp"
             android:text="@string/typeOfSkin"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,13 +61,12 @@
             tools:listitem="@layout/shade_list" />
 
         <Button
-            android:id="@+id/btn_analysis"
+            android:id="@+id/btn_start_over"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="60dp"
-            android:backgroundTint="@color/ColorSecondary"
             android:text="@string/button5"
-            android:textColor="@color/ColorPrimary"
+            style="@style/ButtonStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

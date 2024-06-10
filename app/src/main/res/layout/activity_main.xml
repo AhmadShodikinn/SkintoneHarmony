@@ -8,7 +8,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/ColorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -20,7 +19,6 @@
         android:layout_marginTop="157dp"
         android:fontFamily="@font/montaga"
         android:text="@string/title"
-        android:textColor="@color/ColorSecondary"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="600dp"
         android:text="@string/button1"
-        android:backgroundTint="@color/ColorSecondary"
-        android:textColor="@color/ColorPrimary"
+        style="@style/ButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +52,6 @@
         android:layout_marginTop="10dp"
         android:text="@string/subtitle1"
         android:textAlignment="center"
-        android:textColorLink="@color/ColorSecondary"
         android:textSize="18sp"
         android:fontFamily="@font/montaga"
         app:layout_constraintEnd_toEndOf="parent"

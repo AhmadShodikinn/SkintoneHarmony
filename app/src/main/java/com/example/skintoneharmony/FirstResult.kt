@@ -40,6 +40,11 @@ class FirstResult : AppCompatActivity() {
         setContentView(binding.root)
 
         enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         val result = intent.getIntExtra("skinTone", 0)
         Toast.makeText(this, "Skin Tone: $result", Toast.LENGTH_SHORT).show()
@@ -94,6 +99,3 @@ class FirstResult : AppCompatActivity() {
 //    }
 
 }
-
-
-
