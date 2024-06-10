@@ -12,9 +12,7 @@
     </style>
 
     <style name="ToolbarStyle" parent="@style/Widget.Material3.Toolbar">
-        <!-- Atur warna latar belakang toolbar -->
         <item name="android:background">@color/ColorPrimaryDark</item>
-        <!-- Atur warna teks toolbar -->
         <item name="android:titleTextColor">@color/ColorSecondaryDark</item>
     </style>
 
@@ -35,6 +33,11 @@
     <style name="RectangleBackground" parent="Base.Theme.SkintoneHarmony">
         <item name="android:background">@drawable/rectangle_background</item>
         <item name="android:textColor">@color/ColorSecondary</item>
+    </style>
+
+
+    <style name="imageVector" parent="Base.Theme.SkintoneHarmony">
+        <item name="srcCompat">@drawable/vector_image_secondary</item>
     </style>
 
     <style name="RadioButton" parent="@style/Widget.Material3.CompoundButton.MaterialSwitch">
