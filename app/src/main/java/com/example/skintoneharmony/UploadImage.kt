@@ -3,6 +3,8 @@ package com.example.skintoneharmony
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -19,17 +21,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.skintoneharmony.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.skintoneharmony.databinding.ActivityUploadImageBinding
-import com.example.skintoneharmony.ml.ToneModel
-import com.example.skintoneharmony.ml.ToneModelAndiko
-import com.example.skintoneharmony.tools.ImageHelper
+import com.example.skintoneharmony.ml.ModelFinal
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView
 import org.tensorflow.lite.DataType
-import org.tensorflow.lite.support.common.ops.NormalizeOp
-import org.tensorflow.lite.support.image.ImageProcessor
-import org.tensorflow.lite.support.image.TensorImage
-import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 
 class UploadImage : AppCompatActivity() {
@@ -120,7 +118,6 @@ class UploadImage : AppCompatActivity() {
     private fun showImage() {
         currentImageUri?.let {
             Log.d("Image URI", "showImage: $it")
-//            binding.imageView2.setImageURI(it)
             CropImage.activity(it)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .start(this)
@@ -139,55 +136,62 @@ class UploadImage : AppCompatActivity() {
 
     private fun analyzeImage() {
         currentImageUri?.let { uri ->
-            val bitmap = ImageHelper.loadImageFromUri(this, uri, 128, 128)
-            if (bitmap != null) {
-                // Proses gambar menggunakan ImageProcessor.Builder()
-                val processor = ImageProcessor.Builder()
-                    .add(NormalizeOp(0.0f, 255.0f)) // Convert from uint8 [0, 255] to float32 [0, 1]
-                    .add(ResizeOp(128, 128, ResizeOp.ResizeMethod.NEAREST_NEIGHBOR)) // Resize to 576x768
-                    .build()
-                val processedImage = processor.process(TensorImage.fromBitmap(bitmap))
+            val bitmap = uriToBitmap(uri)
+            val resizedBitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
 
-                runModel(processedImage)
-            } else {
-                Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
-            }
-        } ?: run {
-            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
+            // Convert Bitmap ke ByteBuffer
+            val byteBuffer = convertBitmapToByteBuffer(resizedBitmap)
+            val model = ModelFinal.newInstance(this)
+            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+            inputFeature0.loadBuffer(byteBuffer)
+
+            // Run model inference
+            val outputs = model.process(inputFeature0)
+            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+
+            val resultArray = outputFeature0.floatArray
+            val maxIndex = resultArray.indices.maxByOrNull { resultArray[it] } ?: -1
+
+            // result + 1
+            val toneFinal = maxIndex +1
+
+            Log.d("ModelOutput", "Tone results: $toneFinal")
+
+            // send parameter to result
+            moveToResult(toneFinal)
+
+            // Close the model
+            model.close()
         }
     }
 
-    private fun runModel(processedImage: TensorImage) {
-        val model = ToneModelAndiko.newInstance(this)
+    private fun uriToBitmap(uri: Uri): Bitmap {
+        val inputStream = contentResolver.openInputStream(uri)
+        return BitmapFactory.decodeStream(inputStream)
+    }
 
-        // Creates inputs for reference
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 128, 128, 3), DataType.FLOAT32)
-        inputFeature0.loadBuffer(processedImage.buffer)
+    private fun convertBitmapToByteBuffer(bitmap: Bitmap): ByteBuffer {
+        val byteBuffer = ByteBuffer.allocateDirect(4 * 224 * 224 * 3)
+        byteBuffer.order(ByteOrder.nativeOrder())
 
-        // Runs model inference and gets result
-        val outputs = model.process(inputFeature0)
-        val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+        val intValues = IntArray(224 * 224)
+        bitmap.getPixels(intValues, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
 
-        // Gets result from outputFeature0
-        val results = outputFeature0.floatArray
-        Log.d("ModelOutput", "Original results: ${results.contentToString()}")
+        var pixelIndex = 0
+        for (i in 0 until 224) {
+            for (j in 0 until 224) {
+                val pixelValue = intValues[pixelIndex++]
 
-        var maxIndex = results.indices.maxByOrNull { results[it] } ?: -1
-
-        Log.d("ModelOutput", "maxIndex results: $maxIndex")
-
-        moveToResult(maxIndex)
-
-        maxIndex += 1
-        maxIndex -= 10
-        maxIndex *= -1
-
-        Log.d("ModelOutput", "maxIndex absolute results: $maxIndex")
-
-        model.close()
+                byteBuffer.putFloat(((pixelValue shr 16) and 0xFF) / 255.0f)
+                byteBuffer.putFloat(((pixelValue shr 8) and 0xFF) / 255.0f)
+                byteBuffer.putFloat((pixelValue and 0xFF) / 255.0f)
+            }
+        }
+        return byteBuffer
     }
 
     private fun moveToResult(skinTone: Int) {
+        // ready to use mas
         val intent = Intent(this, FirstResult::class.java).apply {
             putExtra("skinTone", skinTone)
         }
