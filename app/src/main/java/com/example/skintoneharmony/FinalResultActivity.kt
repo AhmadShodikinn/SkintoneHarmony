@@ -37,6 +37,10 @@ class FinalResultActivity : AppCompatActivity() {
 //        const val SKINTONE = "FAIR"
 //    }
 
+    companion object {
+        const val EXTRA_TONE = "extra_tone"
+        var selectedTone = String()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFinalResultBinding.inflate(layoutInflater)
@@ -51,7 +55,9 @@ class FinalResultActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        mainViewModel.findShades()
+
+        selectedTone = intent.getStringExtra(EXTRA_TONE).toString()
+        mainViewModel.findShades(selectedTone)
 
         setSupportActionBar(binding.myToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -116,4 +122,6 @@ class FinalResultActivity : AppCompatActivity() {
     private fun setShadeData(listTone: List<SkintoneResponseItem>) {
         adapter.submitList(listTone)
     }
+
+
 }

@@ -19,4 +19,7 @@
     <string name="setting_text">Setting</string>
     <string name="typeOfSkin">Type : Fair</string>
     <string name="button5">Create New Analysis</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</string>
+    <string name="analysis_results">Analysis Results 1</string>
+    <string name="description">Description</string>
 </resources>

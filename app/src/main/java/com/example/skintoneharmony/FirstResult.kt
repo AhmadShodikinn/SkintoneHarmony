@@ -48,7 +48,9 @@ class FirstResult : AppCompatActivity() {
 
 //        // Set onClickListeners for each button
         binding.btn1tes.setOnClickListener {
-//            fetchShades("FAIR")
+            val intent = Intent(this, FinalResultActivity::class.java)
+            intent.putExtra(FinalResultActivity.EXTRA_TONE, "FAIR")
+            startActivity(intent)
         }
 
         binding.btnBtnBtnResult.setOnClickListener {
@@ -56,6 +58,13 @@ class FirstResult : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btn2tes.setOnClickListener {
+//            viewModel.findShades("LIGHT")
+            val intent = Intent(this, FinalResultActivity::class.java)
+            intent.putExtra(FinalResultActivity.EXTRA_TONE, "DARK")
+            startActivity(intent)
+        }
+//
 //
 //        binding.btn2tes.setOnClickListener {
 //            fetchShades("LIGHT")

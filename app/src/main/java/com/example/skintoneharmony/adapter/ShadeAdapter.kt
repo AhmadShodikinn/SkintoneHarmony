@@ -27,7 +27,7 @@ class ShadeAdapter : ListAdapter<SkintoneResponseItem, ShadeAdapter.MyViewHolder
                 .placeholder(R.drawable.splash_background)
                 .into(binding.imageView)
             binding.textViewDescription.text = shade.description
-            binding.textViewSkintone.text = shade.skintone
+//            binding.textViewSkintone.text = shade.skintone
             binding.textViewBrands.text = shade.recommendedBrands.joinToString(", ")
         }
     }

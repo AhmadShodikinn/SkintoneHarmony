@@ -54,8 +54,8 @@ class MainViewModel (application: Application) : ViewModel(){
 //
 //    }
 
-    fun findShades() {
-        val client = ApiConfig.getApiService().getShades(SKINTONE)
+    fun findShades(skintone: String) {
+        val client = ApiConfig.getApiService().getShades(skintone)
         client.enqueue(object : Callback<List<SkintoneResponseItem>> {
             override fun onResponse(
                 call: Call<List<SkintoneResponseItem>>,
