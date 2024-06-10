@@ -64,8 +64,8 @@ class FinalResultActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        binding.recyclerView.addItemDecoration(itemDecoration)
+//        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+//        binding.recyclerView.addItemDecoration(itemDecoration)
 
         // Initialize the adapter and set it to the RecyclerView
         adapter = ShadeAdapter()
