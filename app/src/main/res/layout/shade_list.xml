@@ -29,7 +29,7 @@
         android:layout_width="288dp"
         android:layout_height="186dp"
         android:paddingBottom="16dp"
-        app:srcCompat="@drawable/vector_image_primary"
+        android:src="@drawable/vector_image_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/analysis_results" />

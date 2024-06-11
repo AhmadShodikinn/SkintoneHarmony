@@ -28,7 +28,7 @@ class ShadeAdapter : ListAdapter<SkintoneResponseItem, ShadeAdapter.MyViewHolder
         fun bind(shade: SkintoneResponseItem, position: Int) {
             Glide.with(binding.imageView.context)
                 .load(shade.imageUrl)
-                .placeholder(R.drawable.splash_background)
+                .placeholder(R.drawable.vector_image_primary)
                 .into(binding.imageView)
             binding.textViewDescription.text = shade.description.toParagraphCase()
             binding.textViewBrands.text = shade.recommendedBrands.joinToString(", ").toParagraphCase()
