@@ -145,7 +145,7 @@ class FirstResult : AppCompatActivity() {
 
         binding.btnBtnBtnResult.setOnClickListener {
             val intent = Intent(this, FinalResultActivity::class.java)
-            intent.putExtra(FinalResultActivity.EXTRA_TONE1, result)
+            intent.putExtra(FinalResultActivity.EXTRA_TONE, result)
             startActivity(intent)
         }
 

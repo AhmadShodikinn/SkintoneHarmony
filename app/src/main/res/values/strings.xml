@@ -20,8 +20,9 @@
     <string name="typeOfSkin">Type : %s</string>
     <string name="button5">Create New Analysis</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</string>
-    <string name="analysis_results">Analysis Results 1</string>
+    <string name="analysis_results">Analysis Results %s</string>
     <string name="description">Description</string>
     <string name="setting_darkMode">Dark Mode</string>
     <string name="version_app">V.1.0</string>
+    <string name="brand_comparison">Brand Comparison</string>
 </resources>

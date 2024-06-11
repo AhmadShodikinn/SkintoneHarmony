@@ -19,15 +19,27 @@
     <style name="ButtonStyle" parent="@style/Widget.Material3.Button">
         <item name="android:backgroundTint">@color/ColorSecondaryDark</item>
         <item name="android:textColor">@color/ColorPrimaryDark</item>
+        <item name="fontFamily">@font/montaga</item>
     </style>
 
     <style name="ButtonStyleOutline" parent="@style/Widget.Material3.Button.OutlinedButton">
         <item name="android:backgroundTint">@color/ColorPrimaryDark</item>
         <item name="android:textColor">@color/ColorSecondaryDark</item>
+        <item name="fontFamily">@font/montaga</item>
     </style>
 
     <style name="ItemSettings" parent="Base.Theme.SkintoneHarmony">
         <item name="android:icon">@drawable/ic_menu_hamburger</item>
+    </style>
+
+    <style name="TextTitleSetting" parent="Base.Theme.SkintoneHarmony">
+        <item name="fontFamily">@font/montaga</item>
+        <item name="android:textColor">@color/ColorSecondaryDark</item>
+    </style>
+
+    <style name="TextSubtitleSetting" parent="Base.Theme.SkintoneHarmony">
+        <item name="fontFamily">@font/montaga</item>
+        <item name="android:textColor">@color/colorSubtitle</item>
     </style>
 
     <style name="RectangleBackground" parent="Base.Theme.SkintoneHarmony">
@@ -43,6 +55,10 @@
     <style name="RadioButton" parent="@style/Widget.Material3.CompoundButton.MaterialSwitch">
         <item name="thumbTint">@color/ColorPrimaryDark</item>
         <item name="trackTint">@color/ColorSecondaryDark</item>
+    </style>
+
+    <style name="BorderSetting" parent="Base.Theme.SkintoneHarmony">
+        <item name="android:background">@color/ColorSecondaryDark</item>
     </style>
 
 </resources>

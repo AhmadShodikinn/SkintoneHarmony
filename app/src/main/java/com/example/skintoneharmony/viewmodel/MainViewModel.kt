@@ -20,6 +20,9 @@ class MainViewModel (application: Application) : ViewModel(){
     private val _listTone = MutableLiveData<List<SkintoneResponseItem>?>()
     val listTone: MutableLiveData<List<SkintoneResponseItem>?> = _listTone
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
 //    private lateinit var finalBinding: ActivityFinalResultBinding
 
 
@@ -52,16 +55,20 @@ class MainViewModel (application: Application) : ViewModel(){
 //    }
 
     fun findShades(skintone: Int) {
+        _isLoading.value = true
+
         val client = ApiConfig.getApiService().getShades(skintone)
         client.enqueue(object : Callback<List<SkintoneResponseItem>> {
             override fun onResponse(
                 call: Call<List<SkintoneResponseItem>>,
                 response: Response<List<SkintoneResponseItem>>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _listTone.value = responseBody
+//                        val skintones = responseBody.map { it.skintone }
                     } else {
                         Log.e(TAG, "Response Body is null")
 //                        Toast.makeText(this@FinalResultActivity, "Response Body is null", Toast.LENGTH_SHORT).show()
@@ -75,6 +82,8 @@ class MainViewModel (application: Application) : ViewModel(){
             }
 
             override fun onFailure(call: Call<List<SkintoneResponseItem>>, t: Throwable) {
+                _isLoading.value = false
+
                 Log.e(TAG, "onFailure: ${t.message}")
 //                Toast.makeText(this@FinalResultActivity, "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
             }
