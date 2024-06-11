@@ -38,7 +38,10 @@ class FinalResultActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_TONE = "extra_tone"
+        const val EXTRA_TONE1 = "extra_tone1"
         var selectedTone = String()
+        var selectedTone1: Int= 0
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +49,9 @@ class FinalResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         mainViewModel.listTone.observe(this) { listTone ->
-            setShadeData(listTone)
+            if (listTone != null) {
+                setShadeData(listTone)
+            }
         }
         enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -56,7 +61,9 @@ class FinalResultActivity : AppCompatActivity() {
         }
 
         selectedTone = intent.getStringExtra(EXTRA_TONE).toString()
-        mainViewModel.findShades(selectedTone)
+        selectedTone1 = intent.getIntExtra(EXTRA_TONE1, 0)
+
+        mainViewModel.findShades(selectedTone1)
 
         setSupportActionBar(binding.myToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)

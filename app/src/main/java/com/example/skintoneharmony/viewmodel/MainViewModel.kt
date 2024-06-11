@@ -17,8 +17,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainViewModel (application: Application) : ViewModel(){
-    private val _listTone = MutableLiveData<List<SkintoneResponseItem>>()
-    val listTone: LiveData<List<SkintoneResponseItem>> = _listTone
+    private val _listTone = MutableLiveData<List<SkintoneResponseItem>?>()
+    val listTone: MutableLiveData<List<SkintoneResponseItem>?> = _listTone
 
 //    private lateinit var finalBinding: ActivityFinalResultBinding
 
@@ -54,7 +54,7 @@ class MainViewModel (application: Application) : ViewModel(){
 //
 //    }
 
-    fun findShades(skintone: String) {
+    fun findShades(skintone: Int) {
         val client = ApiConfig.getApiService().getShades(skintone)
         client.enqueue(object : Callback<List<SkintoneResponseItem>> {
             override fun onResponse(

@@ -3,10 +3,12 @@ package com.example.skintoneharmony
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,13 +27,13 @@ class FirstResult : AppCompatActivity() {
     private lateinit var binding: ActivityFirstResultBinding
     private lateinit var finalBinding: ActivityFinalResultBinding
 
-    val factory: ViewModelFactory by lazy {
-        ViewModelFactory.getInstance(application)
-    }
-
-    val viewModel: MainViewModel by viewModels {
-        factory
-    }
+//    val factory: ViewModelFactory by lazy {
+//        ViewModelFactory.getInstance(application)
+//    }
+//
+//    val viewModel: MainViewModel by viewModels {
+//        factory
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,26 +51,46 @@ class FirstResult : AppCompatActivity() {
         val result = intent.getIntExtra("skinTone", 0)
         Toast.makeText(this, "Skin Tone: $result", Toast.LENGTH_SHORT).show()
 
+
         finalBinding.recyclerView.layoutManager = LinearLayoutManager(this)
 
 //        // Set onClickListeners for each button
-        binding.btn1tes.setOnClickListener {
-            val intent = Intent(this, FinalResultActivity::class.java)
-            intent.putExtra(FinalResultActivity.EXTRA_TONE, "FAIR")
-            startActivity(intent)
-        }
+//        binding.btn1tes.setOnClickListener {
+//            val intent = Intent(this, FinalResultActivity::class.java)
+//            intent.putExtra(FinalResultActivity.EXTRA_TONE, "FAIR")
+//            startActivity(intent)
+//        }
 
         binding.btnBtnBtnResult.setOnClickListener {
             val intent = Intent(this, FinalResultActivity::class.java)
+            intent.putExtra(FinalResultActivity.EXTRA_TONE1, result)
             startActivity(intent)
         }
 
-        binding.btn2tes.setOnClickListener {
-//            viewModel.findShades("LIGHT")
-            val intent = Intent(this, FinalResultActivity::class.java)
-            intent.putExtra(FinalResultActivity.EXTRA_TONE, "DARK")
-            startActivity(intent)
+//        binding.btn2tes.setOnClickListener {
+////            viewModel.findShades("LIGHT")
+//            val intent = Intent(this, FinalResultActivity::class.java)
+//            intent.putExtra(FinalResultActivity.EXTRA_TONE, "DARK")
+//            startActivity(intent)
+//        }
+        val toneView: ImageView = findViewById(R.id.toneView)
+        fun setToneColor(toneResult: Int) {
+            when (toneResult) {
+                1 -> toneView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTone1))
+                2 -> toneView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTone2))
+                3 -> toneView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTone3))
+                4 -> toneView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTone4))
+                5 -> toneView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTone5))
+                6 -> toneView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTone6))
+                7 -> toneView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTone7))
+                8 -> toneView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTone8))
+                9 -> toneView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTone9))
+                10 -> toneView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTone10))
+            }
         }
+
+        setToneColor(result)
+
 //
 //
 //        binding.btn2tes.setOnClickListener {
@@ -87,6 +109,7 @@ class FirstResult : AppCompatActivity() {
 //            fetchShades("DARK")
 //        }
     }
+
 //    private fun setShade(listTone:List<SkintoneResponseItem>){
 //        val adapter = ShadeAdapter()
 //        adapter.submitList(listUsers)

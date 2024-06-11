@@ -6,8 +6,8 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("/api/shades")
+    @GET("/api/shades/by-number")
     fun getShades(
-        @Query("skintone") skintone: String
+        @Query("number") number: Int
     ): Call<List<SkintoneResponseItem>>
 }
