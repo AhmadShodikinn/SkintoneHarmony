@@ -12,10 +12,12 @@
     </style>
 
     <style name="ToolbarStyle" parent="@style/Widget.Material3.Toolbar">
-        <!-- Atur warna latar belakang toolbar -->
         <item name="android:background">@color/ColorPrimary</item>
-        <!-- Atur warna teks toolbar -->
         <item name="android:titleTextColor">@color/ColorSecondary</item>
+    </style>
+
+    <style name="imageVector" parent="Base.Theme.SkintoneHarmony">
+        <item name="srcCompat">@drawable/vector_image_primary</item>
     </style>
 
     <style name="ButtonStyle" parent="@style/Widget.Material3.Button">

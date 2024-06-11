@@ -51,10 +51,10 @@
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
+        style="@style/imageVector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/vector_image_primary"
         android:contentDescription="@string/imageDescription" />
 
     <TextView
