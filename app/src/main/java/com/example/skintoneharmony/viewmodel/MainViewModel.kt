@@ -22,13 +22,10 @@ class MainViewModel (application: Application) : ViewModel(){
 
 //    private lateinit var finalBinding: ActivityFinalResultBinding
 
-    private lateinit var adapter: ShadeAdapter
-
 
 
     companion object {
         const val TAG = "FinalResultActivity"
-        private const val SKINTONE = "FAIR"
     }
 
 //    init{

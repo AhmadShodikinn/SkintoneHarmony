@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -39,8 +40,7 @@ class FinalResultActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_TONE = "extra_tone"
         const val EXTRA_TONE1 = "extra_tone1"
-        var selectedTone = String()
-        var selectedTone1: Int= 0
+        var selectedTone: Int= 0
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,10 +60,10 @@ class FinalResultActivity : AppCompatActivity() {
             insets
         }
 
-        selectedTone = intent.getStringExtra(EXTRA_TONE).toString()
-        selectedTone1 = intent.getIntExtra(EXTRA_TONE1, 0)
 
-        mainViewModel.findShades(selectedTone1)
+        selectedTone = intent.getIntExtra(EXTRA_TONE1, 0)
+
+        mainViewModel.findShades(selectedTone)
 
         setSupportActionBar(binding.myToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -83,6 +83,16 @@ class FinalResultActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+        val textView4 = findViewById<TextView>(R.id.textView4)
+        val colors = listOf(
+            R.color.colorTone1, R.color.colorTone2, R.color.colorTone3,
+            R.color.colorTone4, R.color.colorTone5, R.color.colorTone6,
+            R.color.colorTone7, R.color.colorTone8, R.color.colorTone9,
+            R.color.colorTone10
+        )
+        val backgroundColor = colors[selectedTone.coerceIn(1, 10) - 1]
+        textView4.setBackgroundResource(backgroundColor)
 
     }
 

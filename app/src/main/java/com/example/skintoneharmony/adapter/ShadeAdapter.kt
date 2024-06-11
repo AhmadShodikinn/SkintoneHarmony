@@ -16,8 +16,8 @@ class ShadeAdapter : ListAdapter<SkintoneResponseItem, ShadeAdapter.MyViewHolder
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val review = getItem(position)
-        holder.bind(review)
+        val tone = getItem(position)
+        holder.bind(tone)
     }
 
     class MyViewHolder(val binding: ShadeListBinding) : RecyclerView.ViewHolder(binding.root) {
