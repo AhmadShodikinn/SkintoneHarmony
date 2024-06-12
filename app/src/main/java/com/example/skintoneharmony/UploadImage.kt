@@ -73,7 +73,6 @@ class UploadImage : AppCompatActivity() {
         binding.btnOpenGallery.setOnClickListener { startGallery() }
         binding.btnOpenCamera.setOnClickListener { startCamera() }
         binding.btnAnalysis.setOnClickListener { analyzeImage() }
-//        binding.btnAnalysis.setOnClickListener { moveToResult(3) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -136,6 +135,11 @@ class UploadImage : AppCompatActivity() {
     }
 
     private fun analyzeImage() {
+        if (currentImageUri == null) {
+            Toast.makeText(this, "Please select an image first", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         currentImageUri?.let { uri ->
             val bitmap = uriToBitmap(uri)
             val resizedBitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
@@ -192,11 +196,11 @@ class UploadImage : AppCompatActivity() {
     }
 
     private fun moveToResult(skinTone: Int) {
-        // ready to use mas
         val intent = Intent(this, FirstResult::class.java).apply {
             putExtra("skinTone", skinTone)
         }
         startActivity(intent)
+        finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

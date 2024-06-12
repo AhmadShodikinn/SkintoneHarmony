@@ -40,7 +40,6 @@
 
         <TextView
             style="@style/RectangleBackground"
-            android:background="@drawable/rectangle_background_dark"
             android:id="@+id/textView4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -56,7 +55,6 @@
 
         <TextView
             style="@style/RectangleBackground"
-            android:background="@drawable/rectangle_background_dark"
             android:id="@+id/textViewLoading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

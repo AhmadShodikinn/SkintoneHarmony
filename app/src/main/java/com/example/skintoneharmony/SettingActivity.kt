@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.skintoneharmony.databinding.ActivitySettingBinding
 import com.example.skintoneharmony.preferences.SettingsPreferences
 import com.example.skintoneharmony.preferences.SettingsViewModel
-import com.example.skintoneharmony.preferences.ViewModelFactory
+import com.example.skintoneharmony.preferences.SettingsModelFactory
 import com.example.skintoneharmony.preferences.dataStore
 import com.google.android.material.materialswitch.MaterialSwitch
 
@@ -30,11 +30,10 @@ class SettingActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         val switchTheme = findViewById<MaterialSwitch>(R.id.switch_theme)
 
         val pref = SettingsPreferences.getInstance(application.dataStore)
-        val settingsViewModel = ViewModelProvider(this, ViewModelFactory(pref)).get(
+        val settingsViewModel = ViewModelProvider(this, SettingsModelFactory(pref)).get(
             SettingsViewModel::class.java
         )
 
