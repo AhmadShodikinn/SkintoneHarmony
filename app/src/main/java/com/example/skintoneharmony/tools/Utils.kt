@@ -10,4 +10,8 @@ object Utils {
         val filesDir = context.externalCacheDir
         return File.createTempFile(timeStamp, ".jpg", filesDir)
     }
+    fun String.toParagraphCase(): String {
+        return this.split(" ").joinToString(" ") { it.lowercase().replaceFirstChar { char -> char.uppercase() } }
+    }
+
 }

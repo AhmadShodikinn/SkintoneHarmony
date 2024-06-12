@@ -32,10 +32,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/toneView"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            app:srcCompat="@color/ColorBrownExample" />
+            android:background="@color/ColorBrownExample" />
 
     </androidx.cardview.widget.CardView>
     <Button
@@ -49,5 +49,74 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_1tes"-->
+<!--        android:layout_width="59dp"-->
+<!--        android:layout_height="49dp"-->
+<!--        android:layout_marginTop="504dp"-->
+<!--        android:backgroundTint="@color/ColorSecondary"-->
+<!--        android:fontFamily="@font/montaga"-->
+<!--        android:text="1"-->
+<!--        android:textColor="@color/ColorPrimary"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.045"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_2tes"-->
+<!--        android:layout_width="59dp"-->
+<!--        android:layout_height="49dp"-->
+<!--        android:layout_marginTop="504dp"-->
+<!--        android:backgroundTint="@color/ColorSecondary"-->
+<!--        android:fontFamily="@font/montaga"-->
+<!--        android:text="2"-->
+<!--        android:textColor="@color/ColorPrimary"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.281"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_3tes"-->
+<!--        android:layout_width="59dp"-->
+<!--        android:layout_height="49dp"-->
+<!--        android:layout_marginTop="504dp"-->
+<!--        android:backgroundTint="@color/ColorSecondary"-->
+<!--        android:fontFamily="@font/montaga"-->
+<!--        android:text="3"-->
+<!--        android:textColor="@color/ColorPrimary"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_4tes"-->
+<!--        android:layout_width="59dp"-->
+<!--        android:layout_height="49dp"-->
+<!--        android:layout_marginTop="504dp"-->
+<!--        android:backgroundTint="@color/ColorSecondary"-->
+<!--        android:fontFamily="@font/montaga"-->
+<!--        android:text="4"-->
+<!--        android:textColor="@color/ColorPrimary"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.724"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_5tes"-->
+<!--        android:layout_width="59dp"-->
+<!--        android:layout_height="49dp"-->
+<!--        android:layout_marginTop="504dp"-->
+<!--        android:backgroundTint="@color/ColorSecondary"-->
+<!--        android:fontFamily="@font/montaga"-->
+<!--        android:text="5"-->
+<!--        android:textColor="@color/ColorPrimary"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.954"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

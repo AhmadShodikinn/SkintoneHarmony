@@ -73,6 +73,7 @@ class UploadImage : AppCompatActivity() {
         binding.btnOpenGallery.setOnClickListener { startGallery() }
         binding.btnOpenCamera.setOnClickListener { startCamera() }
         binding.btnAnalysis.setOnClickListener { analyzeImage() }
+//        binding.btnAnalysis.setOnClickListener { moveToResult(3) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

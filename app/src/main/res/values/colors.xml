@@ -7,4 +7,15 @@
     <color name="ColorSplash">#D3AC7D</color>
     <color name="White">#FFFFFF</color>
     <color name="ColorBrownExample">#CBA18D</color>
+    <color name="colorTone1">#f6ede4</color>
+    <color name="colorTone2">#f3e7db</color>
+    <color name="colorTone3">#f7ead0</color>
+    <color name="colorTone4">#f7ead0</color>
+    <color name="colorTone5">#d7bd96</color>
+    <color name="colorTone6">#a07e56</color>
+    <color name="colorTone7">#825c43</color>
+    <color name="colorTone8">#604134</color>
+    <color name="colorTone9">#3a312a</color>
+    <color name="colorTone10">#292420</color>
+    <color name="colorSubtitle">#988987</color>
 </resources>
