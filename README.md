@@ -18,5 +18,5 @@ Because they don't know the details of what skin tone they have and don't know w
 
 
 # Mockup Apps Dark-Mode
-![image](https://github.com/AhmadShodikinn/SkintoneHarmony/assets/82855392/20ab910b-0348-4163-8fd7-bd40e219d4b7)
+![image](https://github.com/AhmadShodikinn/SkintoneHarmony/assets/82855392/f88c3fed-bc6e-4b82-bcde-6f6260e3d797)
 
