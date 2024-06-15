@@ -18,10 +18,16 @@ Because they don't know the details of what skin tone they have and don't know w
 https://github.com/AhmadShodikinn/SkintoneHarmony/releases/download/v1.0/Skintone.Harmony.apk
 
 # Clone This Project
+To replicate Skintone Harmony App, follow these steps : 
+Prerequisite : 
+1. Android Studio
+2. Java Development Kit (JDK)
+
 Clone the repository:
   ```sh
    git clone https://github.com/TeamSkinToneHarmony/SkintoneHarmony.git
   ```
+Happy Coding :D
 
 # Tech Used
 1. Android Development: Android (Kotlin), RESTful APIs, Retrofit, Glide, Cropper, CameraX
@@ -29,18 +35,18 @@ Clone the repository:
 4. Cloud Services: Google Cloud Platform
 
 # System Overview
-## UserFlow
+UserFlow
 ![image](https://github.com/AhmadShodikinn/SkintoneHarmony/assets/82855392/97ab9a86-b4ab-4b50-9ddc-937838cae8df)
 
-# Mockup Design
-## Wireframe Design 
+Mockup Design
+1. Wireframe Design 
 ![image](https://github.com/AhmadShodikinn/SkintoneHarmony/assets/82855392/19b20a6d-f04e-4e2a-9e78-4b0a5a18a95c)
 
 
-## Mockup Apps Base-Theme
+2. Mockup Apps Base-Theme
 ![image](https://github.com/AhmadShodikinn/SkintoneHarmony/assets/82855392/95c58087-3760-47d3-a4fb-54bce8c4a2c7)
 
 
-## Mockup Apps Dark-Theme
+3. Mockup Apps Dark-Theme
 ![image](https://github.com/AhmadShodikinn/SkintoneHarmony/assets/82855392/f88c3fed-bc6e-4b82-bcde-6f6260e3d797)
 
